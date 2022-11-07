@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>simple examples</title>
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <h1>LIST OF ALBUMS</h1>
+    <div class="container"></div>
+    <div class="container2"></div>
+
+    <script>
+      const options = {
+        method: "GET",
+        headers: {
+          "X-RapidAPI-Key":
+            "433c07e238msh70338b5f99f1cbcp1c88a0jsn5b40e52db16c",
+          "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
+        },
+      };
+
+      //   fetch("https://deezerdevs-deezer.p.rapidapi.com/search?q=eminem", options)
+      //     .then((response) => response.json())
+      //     .then((listofAlbums) => {
+      //             }
+      //     .catch((err) => console.error(err));
+
+      fetch(
+        "https://deezerdevs-deezer.p.rapidapi.com/search?q=beyonce",
+        options
+      )
+        .then((response) => response.json())
+        .then((response) => {
+          let container = document.querySelector(".container");
+          container.innerHTML = "";
+          const { data } = response;
+          console.log(data);
+          data.map((obj, i) => {
+            return (container.innerHTML += `<div class="row">
+                        <div class="col-4 ">
+                                <div class="card mb-5 " >
+                                <img src=${obj.artist.picture} class="card-img-top w-50 " />
+                                <h5 class="card-title">${obj.album.title}</h5>
+                                <p class="card-text">${obj.title}</p>
+                                </div>
+                        </div>
+                    </div>`);
+          });
+        })
+        .catch((err) => console.error(err));
+
+      fetch(
+        "https://deezerdevs-deezer.p.rapidapi.com/search?q=foo%20fighters",
+        options
+      )
+        .then((response) => response.json())
+        .then((response) => console.log(response))
+        .catch((err) => console.error(err));
+    </script>
+  </body>
+</html>
